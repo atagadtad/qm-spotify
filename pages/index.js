@@ -2,19 +2,16 @@ import { useEffect, useState } from "react";
 
 const Hello = () => {
   const [cocktails, setCocktails] = useState([]);
+  const [cocktail, setCocktail] = useState("");
 
-  useEffect(() => {
-    const fetchCocktail = async (cocktail) => {
-      const result = await fetch(
-        `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${cocktail}`
-      );
-      const data = await result.json();
+  const fetchCocktail = async (cocktail) => {
+    const result = await fetch(
+      `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${cocktail}`
+    );
+    const data = await result.json();
 
-      setCocktails(data?.drinks ?? []);
-    };
-
-    fetchCocktail("martini");
-  }, []);
+    setCocktails(data?.drinks ?? []);
+  };
 
   console.log(cocktails);
 
@@ -22,6 +19,24 @@ const Hello = () => {
     <div className="flex">
       <div className="mx-auto">
         <h1 className="text-3xl font-bold underline">Cocktails</h1>
+
+        <div class="flex m-4 gap-4">
+          <input
+            value={cocktail}
+            onChange={(e) => setCocktail(e.target.value)}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="cocktail"
+            type="text"
+            placeholder="Type a cocktail..."
+          />
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="button"
+            onClick={() => fetchCocktail(cocktail)}
+          >
+            Submit
+          </button>
+        </div>
 
         {cocktails.map((cocktail) => {
           return (
