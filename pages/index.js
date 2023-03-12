@@ -13,6 +13,14 @@ const Hello = () => {
     setCocktails(data?.drinks ?? []);
   };
 
+  const fetchRandomCocktail = async () => {
+    const result = await fetch(
+      "https://www.thecocktaildb.com/api/json/v1/1/random.php"
+    );
+    const data = await result.json();
+    setCocktails(data?.drinks ?? []);
+  };
+
   console.log(cocktails);
 
   return (
@@ -20,11 +28,11 @@ const Hello = () => {
       <div className="mx-auto">
         <h1 className="text-3xl font-bold underline">Cocktails</h1>
 
-        <div class="flex m-4 gap-4">
+        <div class="flex justify-center m-4 gap-4">
           <input
             value={cocktail}
             onChange={(e) => setCocktail(e.target.value)}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="cocktail"
             type="text"
             placeholder="Type a cocktail..."
@@ -35,6 +43,14 @@ const Hello = () => {
             onClick={() => fetchCocktail(cocktail)}
           >
             Submit
+          </button>
+
+          <button
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="button"
+            onClick={() => fetchRandomCocktail()}
+          >
+            Surprise Me!
           </button>
         </div>
 
